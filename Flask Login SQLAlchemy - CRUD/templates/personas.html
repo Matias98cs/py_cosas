@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-2">
+    <h1>Personas</h1>
+    <form id="nueva-persona-form">
+        <div class="row">
+            <div class="col mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre">
+            </div>
+            <div class="col mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" class="form-control" id="apellido">
+            </div>
+
+            <div class="col mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="col mb-3">
+                <label for="personal_id" class="form-label">ID Personal</label>
+                <input type="text" class="form-control" id="personal_id">
+            </div>
+            <div class="col mb-3">
+                <label for="genero_id" class="form-label">ID de Género</label>
+                <input type="text" class="form-control" id="genero_id">
+            </div>
+            <div class="col mb-3 d-flex align-items-end">
+                <button class="btn btn-success btn-sm " type="submit" id="agregar-persona">Agregar</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="personas-list"></div>
+
+    <a class="btn btn-primary" href="{{ url_for('routes.index') }}">Volver a Inicio</a>
+</div>
+<script src="{{ url_for('static', filename='personas_script.js') }}"></script>
+{% endblock %}

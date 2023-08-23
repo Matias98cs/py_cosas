@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-2 small"></div>
+	<h2 class="text-center">Personas</h2>
+	<a class="btn btn-success mb-3" href="{{ url_for('routes_personas.crear_persona') }}">Agregar persona</a>
+
+	<div id="personas-list">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Apellido</th>
+					<th>Email</th>
+					<th>Edad</th>
+					<th>Genero</th>
+					<th></th>
+					<!-- ... (otros encabezados) ... -->
+				</tr>
+			</thead>
+			<tbody>
+				{% for persona in personas.items %}
+				<tr>
+					<td>{{ persona.id }}</td>
+					<td>{{ persona.nombre }}</td>
+					<td>{{ persona.apellido }}</td>
+					<td>{{ persona.email }}</td>
+					<td>{{ persona.age }}</td>
+					<td>{{ persona.genero.nombre }}</td>
+					<!-- ... (otros campos) ... -->
+					<td>
+						<a href="{{ url_for('routes_personas.editar_persona', persona_id=persona.id) }}"
+							class="btn btn-primary">Editar</a>
+						<button class="btn btn-danger" data-toggle="modal"
+							data-target="#eliminarModal{{ persona.id }}">Eliminar</button>
+					</td>
+				</tr>
+				<!-- Modal para confirmar la eliminación -->
+				<div class="modal fade" id="eliminarModal{{ persona.id }}" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel{{ persona.id }}" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="eliminarModalLabel{{ persona.id }}">Confirmar Eliminación</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								¿Estás seguro de que deseas eliminar a {{ persona.nombre }} {{ persona.apellido }}?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+								<form action="{{ url_for('routes_personas.eliminar_persona', persona_id=persona.id) }}" method="POST">
+									<button type="submit" class="btn btn-danger">Eliminar</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<nav aria-label="Paginación">
+			<ul class="pagination">
+				{% if personas.has_prev %}
+				<li class="page-item">
+					<a class="page-link"
+						href="{{ url_for('routes_personas.obtener_personas_paginadas', page=1) }}">Primera</a>
+				</li>
+				{% endif %}
+
+				{% for num in personas.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+				{% if num %}
+				<li class="page-item {% if num == personas.page %}active{% endif %}">
+					<a class="page-link" href="{{ url_for('routes_personas.obtener_personas_paginadas', page=num) }}">{{ num
+						}}</a>
+				</li>
+				{% else %}
+				<li class="page-item disabled"><span class="page-link">...</span></li>
+				{% endif %}
+				{% endfor %}
+
+				{% if personas.has_next %}
+				<li class="page-item">
+					<a class="page-link"
+						href="{{ url_for('routes_personas.obtener_personas_paginadas', page=personas.pages) }}">Última</a>
+				</li>
+				{% endif %}
+			</ul>
+		</nav>
+	</div>
+
+<a class="btn btn-primary" href="{{ url_for('routes.index') }}">Volver a Inicio</a>
+</div>
+
+{% endblock %}

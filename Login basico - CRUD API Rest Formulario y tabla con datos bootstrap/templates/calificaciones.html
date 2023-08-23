@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-2">
+    <h1>Calificaciones</h1>
+    <form id="nueva-calificacion-form">
+        <div class="row">
+            <div class="col mb-3">
+                <label for="Nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="Nombre">
+            </div>
+            <div class="col mb-3">
+                <label for="Clase" class="form-label">Clase</label>
+                <input type="text" class="form-control" id="Clase">
+            </div>
+
+            <div class="col mb-3">
+                <label for="Materia" class="form-label">Materia</label>
+                <input type="text" class="form-control" id="Materia">
+            </div>
+
+            <div class="col mb-3">
+                <label for="Calificacion" class="form-label">Calificacion</label>
+                <input type="text" class="form-control" id="Calificacion">
+            </div>  
+            <div class="col mb-3 d-flex align-items-end">
+                <button class="btn btn-success btn-sm " type="submit" id="Agregar">Agregar</button>
+            </div>
+        </div>
+    </form>
+
+    <div id="calificaciones-list"></div>
+
+    <a class="btn btn-primary" href="{{ url_for('main_routes.dashboard') }}">Volver a Inicio</a>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}
